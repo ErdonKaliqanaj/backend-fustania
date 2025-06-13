@@ -20,8 +20,12 @@ public class UserController {
     private UserService userService;
 
     @PostMapping("/register")
-    public ResponseEntity<User> register(@Valid @RequestBody User user) {
-        User registeredUser = userService.registerUser(user);
-        return ResponseEntity.ok(registeredUser);
+    public ResponseEntity<?> register(@Valid @RequestBody User user) {
+        try {
+            User registeredUser = userService.registerUser(user);
+            return ResponseEntity.ok(registeredUser);
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(409).body(e.getMessage());
+        }
     }
 }

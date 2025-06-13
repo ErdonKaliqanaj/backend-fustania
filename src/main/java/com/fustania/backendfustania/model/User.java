@@ -1,6 +1,6 @@
 package com.fustania.backendfustania.model;
-import org.hibernate.validator.constraints.Email;
-import org.springframework.data.annotation.Id;
+
+import jakarta.persistence.Id;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -8,6 +8,7 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
@@ -39,13 +40,20 @@ public class User {
     @Enumerated(EnumType.STRING)
     @NotBlank(message = "Shteti është i detyrueshëm")
     private Shteti shteti;
+    
+    @Enumerated(EnumType.STRING)
+    private Role role = Role.BUYER;
 
     public enum Shteti {
-        KOSOVE // Fillimisht vetëm Kosova
-        // Më vonë mund të shtohen: , SHQIPERI, MAQEDONI
+        KOSOVA, SHQIPERI, MAQEDONI 
+        
+    }
+    
+    public enum Role{
+    	BUYER, SELLER
     }
 
-    // Getters dhe Setters
+    
     public Long getId() {
         return id;
     }
@@ -93,4 +101,12 @@ public class User {
     public void setShteti(Shteti shteti) {
         this.shteti = shteti;
     }
+    
+    public Role getRole() {
+    	return role;
+    }
+    public void setRole(Role role) {
+    	this.role = role;
+    }
 }
+

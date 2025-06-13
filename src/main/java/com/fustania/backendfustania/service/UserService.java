@@ -1,27 +1,31 @@
-package com.fustania.backendfustania.service;
+package com.fustania.backendfustania.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.fustania.backendfustania.model.User;
-import com.fustania.backendfustania.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.stereotype.Service;
+import com.fustania.backendfustania.service.UserService;
 
-@Service
-public class UserService {
+import jakarta.validation.Valid;
 
-    @Autowired
-    private UserRepository userRepository;
+@RestController
+@RequestMapping("/api/users")
+public class UserController {
 
     @Autowired
-    private BCryptPasswordEncoder passwordEncoder;
+    private UserService userService;
 
-    public User registerUser(User user) {
-        if (userRepository.findByEmail(user.getEmail()).isPresent()) {
-            throw new RuntimeException("Email-i është tashmë në përdorim");
+    @PostMapping("/register")
+    public ResponseEntity<?> register(@Valid @RequestBody User user) {
+        try {
+            User registeredUser = userService.registerUser(user);
+            return ResponseEntity.ok(registeredUser);
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(409).body(e.getMessage());
         }
-
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        return userRepository.save(user);
     }
 }
