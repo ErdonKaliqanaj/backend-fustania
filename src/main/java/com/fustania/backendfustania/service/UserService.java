@@ -1,31 +1,34 @@
-package com.fustania.backendfustania.controller;
+package com.fustania.backendfustania.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
 
+import com.fustania.backendfustania.dto.RegisterRequest;
 import com.fustania.backendfustania.model.User;
-import com.fustania.backendfustania.service.UserService;
+import com.fustania.backendfustania.repository.UserRepository;
 
-import jakarta.validation.Valid;
+@Service
+public class UserService {
 
-@RestController
-@RequestMapping("/api/users")
-public class UserController {
-
-    @Autowired
-    private UserService userService;
-
-    @PostMapping("/register")
-    public ResponseEntity<?> register(@Valid @RequestBody User user) {
-        try {
-            User registeredUser = userService.registerUser(user);
-            return ResponseEntity.ok(registeredUser);
-        } catch (RuntimeException e) {
-            return ResponseEntity.status(409).body(e.getMessage());
-        }
-    }
+ private final UserRepository userRepository;
+ private final PasswordEncoder passwordEncoder;
+ 
+ public UserService(UserRepository repo, PasswordEncoder encoder) {
+	 this.userRepository = repo;
+	 this.passwordEncoder = encoder;
+ }
+ 
+ public void register(RegisterRequest req) {
+	 User user = new User();
+	 user.setEmri(req.emri);
+	 user.setMbiemri(req.mbiemri);
+	 user.setEmail(req.email);
+	 user.setPassword(passwordEncoder.encode(req.password));
+	 user.setShteti(req.shteti);
+	 user.setRoli(req.roli);
+	 
+	 userRepository.save(user);
+ }
 }

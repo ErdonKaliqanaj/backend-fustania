@@ -1,16 +1,7 @@
 package com.fustania.backendfustania.model;
 
-import jakarta.persistence.Id;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Table;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
+import jakarta.persistence.*;
+
 
 @Entity
 @Table(name = "users")
@@ -20,38 +11,25 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message = "Emri është i detyrueshëm")
-    @Size(min = 2, max = 50, message = "Emri duhet të jetë midis 2 dhe 50 karaktere")
+   
     private String emri;
-
-    @NotBlank(message = "Mbiemri është i detyrueshëm")
-    @Size(min = 2, max = 50, message = "Mbiemri duhet të jetë midis 2 dhe 50 karaktere")
     private String mbiemri;
 
-    @NotBlank(message = "Email është i detyrueshëm")
-    @Email(message = "Email nuk është i vlefshëm")
-    @Column(unique = true)
+    
+    @Column(unique = true, nullable = false)
     private String email;
 
-    @jakarta.validation.constraints.NotBlank(message = "Fjalëkalimi është i detyrueshëm")
-    @Size(min = 6, message = "Fjalëkalimi duhet të jetë të paktën 6 karaktere")
+
+
+    
     private String password;
 
-    @Enumerated(EnumType.STRING)
-    @NotBlank(message = "Shteti është i detyrueshëm")
+   @Enumerated(EnumType.STRING)
     private Shteti shteti;
     
     @Enumerated(EnumType.STRING)
-    private Role role = Role.BUYER;
-
-    public enum Shteti {
-        KOSOVA, SHQIPERI, MAQEDONI 
-        
-    }
-    
-    public enum Role{
-    	BUYER, SELLER
-    }
+    private Roli roli ;
+  
 
     
     public Long getId() {
@@ -93,20 +71,18 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
-
     public Shteti getShteti() {
-        return shteti;
+    	return shteti;
     }
-
     public void setShteti(Shteti shteti) {
-        this.shteti = shteti;
+    	this.shteti = shteti;
     }
-    
-    public Role getRole() {
-    	return role;
+    public Roli getRoli() {
+    	return roli;
     }
-    public void setRole(Role role) {
-    	this.role = role;
+    public void setRoli(Roli roli) {
+    	this.roli = roli;
     }
 }
+
 
