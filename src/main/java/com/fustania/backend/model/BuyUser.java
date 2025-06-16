@@ -30,6 +30,8 @@ public class BuyUser {
 
     @NotBlank(message = "Adresa është e detyrueshme")
     private String address;
+    @Enumerated(EnumType.STRING)
+    private User.Country shteti = User.Country.KOSOVE;
 
     
 
@@ -72,6 +74,13 @@ public class BuyUser {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+    public User.Country getShteti() {
+        return shteti;
+    }
+
+    public void setShteti(User.Country shteti) {
+        this.shteti = shteti;
     }
 
     public String getAddress() {

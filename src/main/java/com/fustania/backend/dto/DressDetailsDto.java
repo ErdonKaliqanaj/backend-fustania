@@ -9,6 +9,7 @@ public class DressDetailsDto {
 	    private String sellerLastName;
 	    private String sellerEmail;
 	    private String sellerAddress;
+	    private Long sellerId;
 	    
 	    public String getDescription() {
 	    	return description;
@@ -63,5 +64,12 @@ public class DressDetailsDto {
 	    }
 	    public void setSellerAddress(String sellerAddress) {
 	    	this.sellerAddress = sellerAddress;
+	    }
+	    public Long getSellerId() {
+	        return sellerId;
+	    }
+
+	    public void setSellerId(Long sellerId) {
+	        this.sellerId = sellerId;
 	    }
 }
