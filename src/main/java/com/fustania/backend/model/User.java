@@ -1,84 +1,88 @@
 package com.fustania.backend.model;
-
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "users")
 public class User {
+	
+	public enum Role{
+		SELLER, BUYER
+	}
+	public enum Country{
+		KOSOVE, SHQIPERI, MAQEDONI
+	}
 	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+	
+	@NotBlank
+	private String firstName;
+	
+	@NotBlank
+	private String lastName;
+	
+	@Email
+	@NotBlank
+	@Column(unique = true)
+	private String email;
+	
+	@NotBlank
+	private String password;
+	
+	@Enumerated(EnumType.STRING)
+	private Role role;
+	
+	@Enumerated(EnumType.STRING)
+	private Country shteti = Country.KOSOVE; 
+	
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
+	
+	public String getFirstName() {
+		return firstName;
+	}
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+	
+	public String getLastName() {
+		return lastName;
+	}
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+	
+	public String getEmail(){
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	public Role getRole() {
+		return role;
+	}
+	public void setRole(Role role) {
+		this.role = role;
+	}
+	
+	public Country getShteti() {
+		return shteti;
+	}
+	public void setShteti(Country shteti) {
+		this.shteti = shteti;
+	}
 
-   
-    private String emri;
-    private String mbiemri;
-
-    
-    @Column(unique = true, nullable = false)
-    private String email;
-
-
-
-    
-    private String password;
-
-   @Enumerated(EnumType.STRING)
-    private Shteti shteti;
-    
-    @Enumerated(EnumType.STRING)
-    private Roli roli ;
-  
-
-    
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getEmri() {
-        return emri;
-    }
-
-    public void setEmri(String emri) {
-        this.emri = emri;
-    }
-
-    public String getMbiemri() {
-        return mbiemri;
-    }
-
-    public void setMbiemri(String mbiemri) {
-        this.mbiemri = mbiemri;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-    public Shteti getShteti() {
-    	return shteti;
-    }
-    public void setShteti(Shteti shteti) {
-    	this.shteti = shteti;
-    }
-    public Roli getRoli() {
-    	return roli;
-    }
-    public void setRoli(Roli roli) {
-    	this.roli = roli;
-    }
 }
