@@ -1,13 +1,13 @@
-package com.fustania.backend;
+package com.fustania.fustania_backend;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class BackendApplication {
+public class FustaniaBackendApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(BackendApplication.class, args);
+		SpringApplication.run(FustaniaBackendApplication.class, args);
 	}
 
 }
